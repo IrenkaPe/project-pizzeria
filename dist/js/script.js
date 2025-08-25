@@ -67,6 +67,7 @@ const select = {
       thisProduct.processOrder();
 
     }
+
     renderInMenu(){
       const thisProduct = this;
 
@@ -88,6 +89,7 @@ const select = {
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
     
     initAccordion(){
@@ -96,21 +98,22 @@ const select = {
       /* find the clickable trigger (the element that should react to clicking) */
       /*const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);*/
     /* START: add event listener to clickable trigger on event click */
-        thisProduct.accordionTrigger.addEventListener('click', function(event) {
+      thisProduct.accordionTrigger.addEventListener('click', function(event) {
       /* prevent default action for event */
-        event.preventDefault();
-        console.log('Kliknięto produkt:', thisProduct.data.name);
+      event.preventDefault();
+      console.log('Kliknięto produkt:', thisProduct.data.name);
       /* find active product (product that has active class) */
-        const activeProduct = document.querySelector (select.all.menuProductsActive);
+      const activeProduct = document.querySelector(select.all.menuProductsActive);
       /* if there is active product and it's not thisProduct.element, remove class active from it */
-        if (activeProduct && activeProduct !== thisProduct.element) {
+      if (activeProduct && activeProduct !== thisProduct.element) {
           console.log('zamknęłam produkt: ', activeProduct);
           activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
         }
       /* toggle active class on thisProduct.element */
         thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
-    });
+      });
     }
+
     initOrderForm(){
       const thisProduct = this;
       console.log(this.initOrderForm);
@@ -130,10 +133,11 @@ const select = {
         thisProduct.processOrder();
       });
     }
+
     processOrder() {
     const thisProduct = this;
 
-    // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
+    // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']} - co zostało zaznaczone na stronie
     const formData = utils.serializeFormToObject(thisProduct.form);
     console.log('formData', formData);
 
@@ -151,10 +155,12 @@ const select = {
         // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
         const option = param.options[optionId];
         console.log(optionId, option);
+        
+        const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
 
-        //czy w form data istnieje właściwość o nazwie zgodnej z kategorią i czy zawiera ona nazwę sprawdzanej opcji 
-        if(formData[paramId] && formData[paramId].includes(optionId)){
-          //jeżeli tak to sprawdz czy nie jest default !
+        //czy w form data istnieje właściwość o nazwie zgodnej z kategorią i czy zawiera ona nazwę sprawdzanej opcji - czy została zaznaczona ten produkt i czy zaznaczony obiekt zawiera zaznaczoną opcję
+        if(optionSelected){
+          //sprawdz czy nie jest default !
           if (!option.default) {
             //dodaj cenę do ceny
             price += option.price;
@@ -164,6 +170,21 @@ const select = {
             // check if the option is default
             price -= option.price;
             // reduce price variable
+          }
+        }
+
+        const optionImage = thisProduct.imageWrapper.querySelector('.' + paramId + '-' + optionId);
+        console.log ('optionImage: ', optionImage);
+        // w tym produkcie we weaperze znajdujemy paramID -optionID
+        if (optionImage){
+          //jeżeli w formularzu został zaznaczony produkt ze składnikiem to dodaj class active
+
+          if(optionSelected){
+            optionImage.classList.add(classNames.menuProduct.imageVisible);
+          }
+          // jeżeli opcja nie jest wybrana to zabierz class active
+          else {optionImage.classList.remove(classNames.menuProduct.imageVisible);
+
           }
         }
       }

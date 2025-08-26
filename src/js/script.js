@@ -64,6 +64,7 @@ const select = {
       thisProduct.getElements();
       thisProduct.initAccordion();
       thisProduct.initOrderForm();
+      thisProduct.initAmountWidget(); 
       thisProduct.processOrder();
 
     }
@@ -90,6 +91,7 @@ const select = {
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget)
     }
     
     initAccordion(){
@@ -155,7 +157,7 @@ const select = {
         // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
         const option = param.options[optionId];
         console.log(optionId, option);
-        
+
         const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
 
         //czy w form data istnieje właściwość o nazwie zgodnej z kategorią i czy zawiera ona nazwę sprawdzanej opcji - czy została zaznaczona ten produkt i czy zaznaczony obiekt zawiera zaznaczoną opcję
@@ -191,10 +193,94 @@ const select = {
     }
   
   // update calculated price in the HTML
+  price*=thisProduct.amountWidget.value;
   thisProduct.priceElem.innerHTML = price;
-}
+    }
+
+    initAmountWidget(){
+      const thisProduct = this;
+      // widget ilości
+      thisProduct.amountWidget = new AmountWidget (thisProduct.amountWidgetElem);
+
+      thisProduct.amountWidgetElem.addEventListener('updated',function() //nasłuchuje event update
+      {thisProduct.processOrder();});// przelicz cenę
+    }
   }
   
+  class AmountWidget {
+    constructor (element){
+      const thisWidget = this;
+
+      thisWidget.getElements(element);
+
+      //thisWidget.setValue (thisWidget.input.value);// wartość startowa
+      const inputValue = thisWidget.input.value;
+      const defaultValue = settings.amountWidget.defaultValue;
+      
+      if(inputValue){
+        thisWidget.setValue(inputValue)
+      }
+      else {
+        thisWidget.setValue(defaultValue)
+      }
+      
+      thisWidget.initActions();
+    }
+
+    getElements(element){
+      const thisWidget = this ;
+
+      thisWidget.element = element;
+
+      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+      thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+      thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+    }
+
+    setValue(value){
+
+      const thisWidget = this;
+
+      const newValue = parseInt(value);
+      // Konwertuje na liczbę
+
+      if(
+        thisWidget.value !== newValue &&
+        !isNaN(newValue) &&
+        newValue <= settings.amountWidget.defaultMax &&
+        newValue >= settings.amountWidget.defaultMin 
+        ) {
+        thisWidget.value = newValue;
+      }
+       thisWidget.input.value = thisWidget.value;
+       thisWidget.announce();
+
+    }
+    // jeżeli thisWidget.value to nowa wartośc&& nie jest null/tekstem && to nowa wartość zostaje przyjeta jezeli warunek nie jest spełniony to pozostaje wcześniejsza
+    initActions() {
+      const thisWidget = this;
+
+      thisWidget.input.addEventListener('change', function () {
+        thisWidget.setValue (thisWidget.input.value)});
+
+      thisWidget.linkDecrease.addEventListener('click', function(event){ 
+        event.preventDefault();
+        thisWidget.setValue (thisWidget.value - 1);
+      });
+      
+      thisWidget.linkIncrease.addEventListener('click', function (event){
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value + 1);
+      });
+    }
+    announce(){
+      const thisWidget = this;
+      const event = new Event('updated');
+        thisWidget.element.dispatchEvent (event);
+      
+    }
+  }
+
   const app = {
 
     initMenu: function(){

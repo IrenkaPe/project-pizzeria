@@ -79,6 +79,7 @@ const select = {
   };
 
   class Product{
+
     constructor(id,data){
       const thisProduct = this;
 
@@ -160,6 +161,7 @@ const select = {
       thisProduct.cartButton.addEventListener('click', function(event){
         event.preventDefault();
         thisProduct.processOrder();
+        thisProduct.addToCart()
       });
     }
 
@@ -171,7 +173,7 @@ const select = {
     console.log('formData', formData);
 
     // set price to default price
-    let price = thisProduct.data.price;
+    let priceSingle = thisProduct.data.price;
 
     // for every category (param)...
     for(let paramId in thisProduct.data.params) {
@@ -192,12 +194,12 @@ const select = {
           //sprawdz czy nie jest default !
           if (!option.default) {
             //dodaj cenę do ceny
-            price += option.price;
+            priceSingle += option.price;
           }
         } else {
           if(option.default) {
             // check if the option is default
-            price -= option.price;
+            priceSingle -= option.price;
             // reduce price variable
           }
         }
@@ -218,19 +220,84 @@ const select = {
         }
       }
     }
-  
-  // update calculated price in the HTML
-  price*=thisProduct.amountWidget.value;
-  thisProduct.priceElem.innerHTML = price;
+    const amount = thisProduct.amountWidget.value;
+    const priceTotal = priceSingle * amount
+
+    thisProduct.priceSingle = priceSingle;
+    thisProduct.priceTotal = priceTotal;
+
+    thisProduct.priceElem.innerHTML = priceTotal;
+    //wyświetl całkowitą cenę w HTML
     }
 
     initAmountWidget(){
       const thisProduct = this;
+      //obsługuje klikniecie +/- wysyła event updated 
       // widget ilości
       thisProduct.amountWidget = new AmountWidget (thisProduct.amountWidgetElem);
 
       thisProduct.amountWidgetElem.addEventListener('updated',function() //nasłuchuje event update
       {thisProduct.processOrder();});// przelicz cenę
+    }
+    
+    addToCart(){
+      const thisProduct = this;
+     //stała podsumowanie productu
+      const productSummary = thisProduct.prepareCartProduct();
+      //dodaj do koszyka tylko podsumowanie productu
+      app.cart.add(productSummary)
+    }
+
+    prepareCartProduct(){
+
+      const thisProduct = this;
+      const productSummary =
+       { 
+        id: thisProduct.id,
+        name: thisProduct.data.name,
+        amount: thisProduct.amountWidget.value,
+        //price: thisProduct.priceElem.innerHTML,
+        priceSingle: thisProduct.priceSingle,
+        price :thisProduct.priceTotal,
+        params : thisProduct.prepareCartProductParams(),
+       };
+      return productSummary;
+
+    }
+
+    prepareCartProductParams(){
+      const thisProduct = this;
+      //przekazanie obiektu z opcjami do koszyka
+
+      const formData = utils.serializeFormToObject(thisProduct.form); //pobieranie danych z formularza
+      console.log('formData:', formData);
+      const params = {}; // tu zapisujemy wybrane opcje - utwórz pusty obiekt
+  
+    // for every category (param)...
+      for(let paramId in thisProduct.data.params) {
+        // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
+        const param = thisProduct.data.params[paramId];
+        console.log(paramId, param);
+    
+        //create category param in pams / tworzymmy miejsce w obiekcie dla tej kategorii
+        params[paramId] = {
+        label: param.label,  // np. 'Sauce'
+        options: {}          // na start pusty – tu dodamy wybrane opcje
+        };
+        // for every option in this category /  Przejdź po każdej opcji w tej kategorii (np. tomato, cream)
+        for (let optionId in param.options) {
+          const option = param.options[optionId];
+          const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
+        
+          //  Sprawdź, czy opcja jest zaznaczona
+          if (optionSelected) {
+        //  Dodaj opcję do options w tej kategorii
+          params[paramId].options[optionId] = option.label;
+      // np. params.sauce.options.tomato = 'Tomato';
+          }
+        }
+      }
+      return params;
     }
   }
   
@@ -262,6 +329,7 @@ const select = {
       thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
       thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
       thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+    
     }
 
     setValue(value){
@@ -320,15 +388,17 @@ const select = {
     }
 // pokazywanie i ukrywanie koszyka,dodawanie i usuwanie produktów,podliczanie ceny zamówienia
     getElements(element){
+
       const thisCart = this;
 
       thisCart.dom = {};
       thisCart.dom.wrapper = element;
-
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
-
+      thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
     }
+
     initActions(){
+      // cliknięcie my cart -pokazuje/ukrywa koszyk
       const thisCart = this;
 
       thisCart.dom.toggleTrigger.addEventListener('click', function(event) {
@@ -336,6 +406,26 @@ const select = {
 
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       })
+    }
+
+    add (menuProduct){
+      console.log ('adding products:', menuProduct);
+      const thisCart = this;
+
+      thisCart.products.push(menuProduct);
+
+      console.log('Product added:', menuProduct);
+      console.log('Current cart:', thisCart.products);
+
+
+      const generatedHTML = templates.cartProduct(menuProduct); //utwórz kod html i zapisz go w stałej
+      console.log('generatedHTML:', generatedHTML);
+      const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+
+      
+      thisCart.dom.productList.appendChild(generatedDOM);
+/* create element DOM  using utils.createElementFromHTML*/
+      
     }
   }
 

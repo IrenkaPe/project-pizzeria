@@ -9,10 +9,13 @@ import Cart from './components/Cart.js';
       const thisApp = this;
 
       console.log('thisApp.data:', thisApp.data);
-      for(let productData in thisApp.data.products){
+      for(let productData of thisApp.data.products){
+        new Product(productData.id, productData);
+      }
+      /*for(let productData in thisApp.data.products){
        // new Product(productData,thisApp.data.products[productData]);
        new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
-      }
+      }*/
     },
 
     initData: function() {
@@ -20,11 +23,13 @@ import Cart from './components/Cart.js';
 
       thisApp.data = {};
       const url = settings.db.url + '/' + settings.db.products;
+      console.log('Fetching data from:', url);
       fetch(url)
         .then(function(rawResponse) {
           return rawResponse.json();
         })
         .then(function(parsedResponse) {
+          console.log('Parsed response:', parsedResponse);
           /* save parsedResponse to thisApp.data.products */
           thisApp.data.products = parsedResponse; 
           /* now you can call initMenu() to render the products */

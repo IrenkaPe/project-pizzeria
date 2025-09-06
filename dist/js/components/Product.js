@@ -11,7 +11,9 @@ class Product{
       thisProduct.data = data;
 
       thisProduct.renderInMenu();
-      console.log('new Product:',thisProduct);
+      console.log('element:', thisProduct.element);
+      console.log('element type:', thisProduct.element.nodeType);
+      console.log('element tag:', thisProduct.element.tagName);
       thisProduct.getElements();
       thisProduct.initAccordion();
       thisProduct.initOrderForm();
@@ -168,7 +170,8 @@ class Product{
             product:thisProduct.prepareCartProduct(),
         }
      });
-     thisProduct.element.dispachEvent(event);
+     console.log('element:', thisProduct.element)
+     thisProduct.element.dispatchEvent(event);
     }
 
     prepareCartProduct(){

@@ -1,9 +1,64 @@
 import {settings, select, templates, classNames} from './settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
+import Booking from './components/Booking.js';
 
 
   const app = {
+    initPages: function(){
+      const thisApp = this;
+
+      thisApp.pages = document.querySelector(select.containerOf.pages).children;
+
+      thisApp.navLinks = document.querySelectorAll(select.nav.links);
+      //znajdujemy linki
+      const idFromHash = window.location.hash.replace('#/','');
+      console.log('id FromHash', idFromHash);
+
+      let pageMatchingHash = thisApp.pages[0].id
+      for(let page of thisApp.pages){
+        if (page.id == idFromHash){
+          pageMatchingHash = page.id;
+          break;
+        }
+      }
+
+      thisApp.activatePage(pageMatchingHash);//znajdujemy podstrony
+
+       for(let link of thisApp.navLinks){
+        link.addEventListener('click',function (event){
+          const clickedElement = this;
+          event.preventDefault();
+          //get page id from href attribute
+            const id = clickedElement.getAttribute('href').replace('#',''); // w stałej id zapisujemy klknięty atrybut href klikniętego elementu w którym zamieniamy# na pusty ciąg znaków
+          // run thisApp.activatePage with that id
+          thisApp.activatePage(id);
+
+          //change URL hash - dodajemy adresy podstron!!
+          window.location.hash ='#/' + id;
+        });
+       }
+    },
+    activatePage: function(pageId){
+      const thisApp = this;
+      // add class'active' to matching pages, temove from non-matching
+      for(let page of thisApp.pages){
+       /* if(page.id == pageId){
+          page.classList.add(classNames.pages.active);
+        } else {
+          page.classList.remove(classNames.pages.active);
+        }*/
+        page.classList.toggle(classNames.pages.active, page.id == pageId);
+      }
+      //toggle - można mu nadać drugi  argument = możemy mu dać warunek z klasy if
+      //add class'active' to matching links, temove from non-matching
+      for(let link of thisApp.navLinks){
+        link.classList.toggle(
+          classNames.nav.active, 
+          link.getAttribute('href') == '#' + pageId
+        );// dla każdego z linków  z thisApp.navLinks  chcemy dodać lub usunąć klasę ,  w zależności od tego czy jest w linku zapisana ta klasa
+      }
+    },
 
     initMenu: function(){
       const thisApp = this;
@@ -38,16 +93,23 @@ import Cart from './components/Cart.js';
     },
 
     initCart: function(){
-    const thisApp = this;
+      const thisApp = this;
 
-    const cartElem = document.querySelector(select.containerOf.cart);
-    thisApp.cart = new Cart (cartElem);
+      const cartElem = document.querySelector(select.containerOf.cart);
+      thisApp.cart = new Cart (cartElem);
 
-    thisApp. productList = document.querySelector(select.containerOf.menu);
-    thisApp.productList.addEventListener('add-to-cart', (event)=>{
-      app.cart.add(event.detail.product);
-
+      thisApp.productList = document.querySelector(select.containerOf.menu);
+      thisApp.productList.addEventListener('add-to-cart', (event)=>{
+        app.cart.add(event.detail.product);
     })
+
+    },
+
+    initBooking: function(){
+      const thisApp = this;
+      const bookingWidget = document.querySelector(select.containerOf.booking);
+      thisApp.booking = new Booking(bookingWidget);
+
     },
 
     init: function(){
@@ -61,7 +123,12 @@ import Cart from './components/Cart.js';
     thisApp.initData();  
     
     thisApp.initCart();
+
+    thisApp.initPages();
+
+    thisApp.initBooking();
     },
+
   }
   app.init();
 

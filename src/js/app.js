@@ -40,6 +40,8 @@ import Booking from './components/Booking.js';
        }
     },
     activatePage: function(pageId){
+      
+      console.log('Activating page:', pageId);
       const thisApp = this;
       // add class'active' to matching pages, temove from non-matching
       for(let page of thisApp.pages){

@@ -1,6 +1,7 @@
 import {settings, select, templates, classNames} from './settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
+import Booking from './components/Booking.js';
 
 
   const app = {
@@ -39,6 +40,8 @@ import Cart from './components/Cart.js';
        }
     },
     activatePage: function(pageId){
+      
+      console.log('Activating page:', pageId);
       const thisApp = this;
       // add class'active' to matching pages, temove from non-matching
       for(let page of thisApp.pages){
@@ -92,16 +95,23 @@ import Cart from './components/Cart.js';
     },
 
     initCart: function(){
-    const thisApp = this;
+      const thisApp = this;
 
-    const cartElem = document.querySelector(select.containerOf.cart);
-    thisApp.cart = new Cart (cartElem);
+      const cartElem = document.querySelector(select.containerOf.cart);
+      thisApp.cart = new Cart (cartElem);
 
-    thisApp. productList = document.querySelector(select.containerOf.menu);
-    thisApp.productList.addEventListener('add-to-cart', (event)=>{
-      app.cart.add(event.detail.product);
-
+      thisApp.productList = document.querySelector(select.containerOf.menu);
+      thisApp.productList.addEventListener('add-to-cart', (event)=>{
+        app.cart.add(event.detail.product);
     })
+
+    },
+
+    initBooking: function(){
+      const thisApp = this;
+      const bookingWidget = document.querySelector(select.containerOf.booking);
+      thisApp.booking = new Booking(bookingWidget);
+
     },
 
     init: function(){
@@ -117,7 +127,10 @@ import Cart from './components/Cart.js';
     thisApp.initCart();
 
     thisApp.initPages();
+
+    thisApp.initBooking();
     },
+
   }
   app.init();
 

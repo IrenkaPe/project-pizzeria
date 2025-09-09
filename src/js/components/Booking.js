@@ -22,14 +22,16 @@ class Booking {
 
         thisBooking.dom.peopleAmount = thisBooking.dom.wrapper.querySelector(select.booking.peopleAmount);// dostęp do inputu peopeleAmount
         thisBooking.dom.hoursAmount = thisBooking.dom.wrapper.querySelector(select.booking.hoursAmount);
-
     }
+    
     initWidgets(){
         const thisBooking = this;
         console.log ('tu będzie metoda init');
-        thisBooking.peopleAmount =new AmountWidget(thisBooking.dom.peopleAmount);// importuje klasę AmountWidget (ten znaleziony input)
+        thisBooking.peopleAmount = new AmountWidget(thisBooking.dom.peopleAmount);// importuje klasę AmountWidget (ten znaleziony input)
         thisBooking.hoursAmount = new AmountWidget(thisBooking.dom.hoursAmount);
-    
+        
+        thisBooking.dom.peopleAmount.addEventListener('update',function(){});
+        thisBooking.dom.hoursAmount.addEventListener('upadate',function(){});
     }
 }
 export default Booking;

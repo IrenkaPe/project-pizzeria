@@ -8,17 +8,10 @@ class AmountWidget extends BaseWidget {//clasa amount jest rozszerzeniem klasy B
       const thisWidget = this;
       
       thisWidget.getElements(element);
-
-      const inputValue = thisWidget.dom.input.value;
-      const defaultValue = settings.amountWidget.defaultValue;
-      
-      if(inputValue){
-        thisWidget.setValue(inputValue)
-      }
-      else {
-        thisWidget.setValue(defaultValue)
-      }
+      thisWidget.setValue(thisWidget.dom.input.value || settings.amountWidget.defaultValue);//operator logiczny OR (||) najpierw spradza lewą strone jeżeli jest prawdziwa to nie sprawdza dalej
+    
       thisWidget.initActions();
+      console.log('AmountWidget:', thisWidget);
     }
 
     getElements(){
@@ -47,7 +40,7 @@ class AmountWidget extends BaseWidget {//clasa amount jest rozszerzeniem klasy B
 
       thisWidget.dom.linkDecrease.addEventListener('click', function(event){ 
         event.preventDefault();
-        thisWidget.setValue (thisWidget.value - 1);
+        thisWidget.setValue(thisWidget.value - 1);
       });
       
       thisWidget.dom.linkIncrease.addEventListener('click', function (event){

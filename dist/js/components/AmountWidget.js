@@ -1,79 +1,52 @@
 import {settings, select} from '../settings.js';
-class AmountWidget {
+import BaseWidget from './BaseWidget.js';// zaimportowanie class widget
+
+class AmountWidget extends BaseWidget {//clasa amount jest rozszerzeniem klasy BaseWidget
     //obsługuje zmiane ilości produktu
     constructor (element){
+      super(element, settings.amountWidget.defaultValue);// wywołanie construktora klasy nadrzędnej 
       const thisWidget = this;
       
       thisWidget.getElements(element);
-
-      const inputValue = thisWidget.input.value;
-      const defaultValue = settings.amountWidget.defaultValue;
-      
-      if(inputValue){
-        thisWidget.setValue(inputValue)
-      }
-      else {
-        thisWidget.setValue(defaultValue)
-      }
-
+      thisWidget.setValue(thisWidget.dom.input.value || settings.amountWidget.defaultValue);//operator logiczny OR (||) najpierw spradza lewą strone jeżeli jest prawdziwa to nie sprawdza dalej
+    
       thisWidget.initActions();
+      console.log('AmountWidget:', thisWidget);
     }
 
-    getElements(element){
+    getElements(){
       const thisWidget = this ;
 
-      thisWidget.element = element;
-
-      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
-      thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
-      thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
-    
+      thisWidget.dom.input = thisWidget.dom.wrapper.querySelector(select.widgets.amount.input);
+      thisWidget.dom.linkDecrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkDecrease);
+      thisWidget.dom.linkIncrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkIncrease);
     }
 
-    setValue(value){
-
-      const thisWidget = this;
-
-      const newValue = parseInt(value);
-      // Konwertuje na liczbę
-
-      if(
-        thisWidget.value !== newValue &&
-        !isNaN(newValue) &&
-        newValue <= settings.amountWidget.defaultMax &&
-        newValue >= settings.amountWidget.defaultMin 
-        ) {
-        thisWidget.value = newValue;
-      }
-       thisWidget.input.value = thisWidget.value;
-       thisWidget.announce();
-
+    isValid(value){// nadpisuję metodę z klasy nadrzędnej
+      return !isNaN(value)//Nota Number ( czy to jest liczba)
+      && value <= settings.amountWidget.defaultMax
+      && value >= settings.amountWidget.defaultMin 
     }
     // jeżeli thisWidget.value to nowa wartośc&& nie jest null/tekstem && to nowa wartość zostaje przyjeta jezeli warunek nie jest spełniony to pozostaje wcześniejsza
+    renderValue(){
+      const thisWidget = this; // renderowanie (wyświetlanie)na stronie
+      thisWidget.dom.input.value = thisWidget.value;
+    }
     initActions() {
       const thisWidget = this;
 
-      thisWidget.input.addEventListener('change', function () {
-        thisWidget.setValue (thisWidget.input.value)});
+      thisWidget.dom.input.addEventListener('change', function () {
+        thisWidget.setValue (thisWidget.dom.input.value)});
 
-      thisWidget.linkDecrease.addEventListener('click', function(event){ 
+      thisWidget.dom.linkDecrease.addEventListener('click', function(event){ 
         event.preventDefault();
-        thisWidget.setValue (thisWidget.value - 1);
+        thisWidget.setValue(thisWidget.value - 1);
       });
       
-      thisWidget.linkIncrease.addEventListener('click', function (event){
+      thisWidget.dom.linkIncrease.addEventListener('click', function (event){
         event.preventDefault();
         thisWidget.setValue(thisWidget.value + 1);
       });
     }
-    announce(){
-      const thisWidget = this;
-
-      const event = new CustomEvent('updated', { 
-        bubbles: true  
-      });
-      thisWidget.element.dispatchEvent(event);   
-    }
-    
   }
    export default AmountWidget;

@@ -11,7 +11,7 @@ class AmountWidget extends BaseWidget {//clasa amount jest rozszerzeniem klasy B
       thisWidget.setValue(thisWidget.dom.input.value || settings.amountWidget.defaultValue);//operator logiczny OR (||) najpierw spradza lewą strone jeżeli jest prawdziwa to nie sprawdza dalej
     
       thisWidget.initActions();
-      console.log('AmountWidget:', thisWidget);
+      //console.log('AmountWidget:', thisWidget);
     }
 
     getElements(){

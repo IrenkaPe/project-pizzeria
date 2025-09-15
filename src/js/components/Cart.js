@@ -9,7 +9,7 @@ class Cart {
       thisCart.products = [];
       thisCart.getElements(element); 
       thisCart.initActions();
-      console.log('new cart: ', thisCart);
+      //console.log('new cart: ', thisCart);
     }
 
     getElements(element){
@@ -63,10 +63,7 @@ class Cart {
       if(index !== -1){
         thisCart.products.splice(index, 1);
       }
-
       thisCart.update();
-
-
     }
 
     add (menuProduct){
@@ -77,7 +74,6 @@ class Cart {
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
 
       thisCart.dom.productList.appendChild(generatedDOM);
-
       thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
 
       thisCart.update();
@@ -107,7 +103,7 @@ class Cart {
       for(let priceElem of thisCart.dom.totalPrice){
         priceElem.innerHTML = thisCart.totalPrice;
       }
-      console.log('total price:', thisCart.totalPrice);
+      //console.log('total price:', thisCart.totalPrice);
     }
 
     sendOrder(){
@@ -143,7 +139,7 @@ class Cart {
           console.log ('parsedResponse', parsedResponse); 
         })
         .catch(function(error) {
-          console.error('Error sending order:', error);
+         console.error('Error sending order:', error);
         });
     }
   }

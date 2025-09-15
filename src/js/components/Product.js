@@ -11,9 +11,9 @@ class Product{
       thisProduct.data = data;
 
       thisProduct.renderInMenu();
-      console.log('element:', thisProduct.element);
-      console.log('element type:', thisProduct.element.nodeType);
-      console.log('element tag:', thisProduct.element.tagName);
+      //console.log('element:', thisProduct.element);
+      // console.log('element type:', thisProduct.element.nodeType);
+      //console.log('element tag:', thisProduct.element.tagName);
       thisProduct.getElements();
       thisProduct.initAccordion();
       thisProduct.initOrderForm();
@@ -51,7 +51,7 @@ class Product{
 
       thisProduct.accordionTrigger.addEventListener('click', function(event) {
       event.preventDefault();
-      console.log('Kliknięto produkt:', thisProduct.data.name);
+      //console.log('Kliknięto produkt:', thisProduct.data.name);
       /* find active product (product that has active class) */
       const activeProduct = document.querySelector(select.all.menuProductsActive);
       /* if there is active product and it's not thisProduct.element, remove class active from it */
@@ -66,7 +66,7 @@ class Product{
 
     initOrderForm(){
       const thisProduct = this;
-      console.log(this.initOrderForm);
+      //console.log(this.initOrderForm);
       thisProduct.form.addEventListener('submit', function(event){
         event.preventDefault();
         thisProduct.processOrder();
@@ -90,7 +90,7 @@ class Product{
 
     // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']} - co zostało zaznaczone na stronie
     const formData = utils.serializeFormToObject(thisProduct.form);
-    console.log('formData', formData);
+    //console.log('formData', formData);
 
     // set price to default price
     let priceSingle = thisProduct.data.price;
@@ -99,13 +99,13 @@ class Product{
     for(let paramId in thisProduct.data.params) {
       // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
       const param = thisProduct.data.params[paramId];
-      console.log(paramId, param);
+      //console.log(paramId, param);
 
       // for every option in this category
       for(let optionId in param.options) {
         // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
         const option = param.options[optionId];
-        console.log(optionId, option);
+        //console.log(optionId, option);
 
         const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
 
@@ -125,7 +125,7 @@ class Product{
         }
 
         const optionImage = thisProduct.imageWrapper.querySelector('.' + paramId + '-' + optionId);
-        console.log ('optionImage: ', optionImage);
+       // console.log ('optionImage: ', optionImage);
         // w tym produkcie we weaperze znajdujemy paramID -optionID
         if (optionImage){
           //jeżeli w formularzu został zaznaczony produkt ze składnikiem to dodaj class active
@@ -170,7 +170,7 @@ class Product{
             product:thisProduct.prepareCartProduct(),
         }
      });
-     console.log('element:', thisProduct.element)
+     //console.log('element:', thisProduct.element)
      thisProduct.element.dispatchEvent(event);
     }
 
@@ -196,14 +196,14 @@ class Product{
       //przekazanie obiektu z opcjami do koszyka
 
       const formData = utils.serializeFormToObject(thisProduct.form); //pobieranie danych z formularza
-      console.log('formData:', formData);
+      //console.log('formData:', formData);
       const params = {}; // tu zapisujemy wybrane opcje - utwórz pusty obiekt
   
     // for every category (param)...
       for(let paramId in thisProduct.data.params) {
         // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
         const param = thisProduct.data.params[paramId];
-        console.log(paramId, param);
+        //console.log(paramId, param);
     
         //create category param in pams / tworzymmy miejsce w obiekcie dla tej kategorii
         params[paramId] = {

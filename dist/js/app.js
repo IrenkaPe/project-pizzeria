@@ -13,7 +13,7 @@ import Booking from './components/Booking.js';
       thisApp.navLinks = document.querySelectorAll(select.nav.links);
       //znajdujemy linki
       const idFromHash = window.location.hash.replace('#/','');
-      console.log('id FromHash', idFromHash);
+      //console.log('id FromHash', idFromHash);
 
       let pageMatchingHash = thisApp.pages[0].id
       for(let page of thisApp.pages){
@@ -41,7 +41,7 @@ import Booking from './components/Booking.js';
     },
     activatePage: function(pageId){
       
-      console.log('Activating page:', pageId);
+      //console.log('Activating page:', pageId);
       const thisApp = this;
       // add class'active' to matching pages, temove from non-matching
       for(let page of thisApp.pages){
@@ -65,7 +65,7 @@ import Booking from './components/Booking.js';
     initMenu: function(){
       const thisApp = this;
 
-      console.log('thisApp.data:', thisApp.data);
+      //console.log('thisApp.data:', thisApp.data);
       for(let productData of thisApp.data.products){
         new Product(productData.id, productData);
       }
@@ -80,13 +80,13 @@ import Booking from './components/Booking.js';
 
       thisApp.data = {};
       const url = settings.db.url + '/' + settings.db.products;
-      console.log('Fetching data from:', url);
+      //console.log('Fetching data from:', url);
       fetch(url)
         .then(function(rawResponse) {
           return rawResponse.json();
         })
         .then(function(parsedResponse) {
-          console.log('Parsed response:', parsedResponse);
+          //console.log('Parsed response:', parsedResponse);
           /* save parsedResponse to thisApp.data.products */
           thisApp.data.products = parsedResponse; 
           /* now you can call initMenu() to render the products */
@@ -116,11 +116,11 @@ import Booking from './components/Booking.js';
 
     init: function(){
       const thisApp = this;
-      console.log('*** App starting ***');
-      console.log('thisApp:', thisApp);
-      console.log('classNames:', classNames);
-      console.log('settings:', settings);
-      console.log('templates:', templates);
+      //console.log('*** App starting ***');
+      //console.log('thisApp:', thisApp);
+      //console.log('classNames:', classNames);
+      //console.log('settings:', settings);
+      //console.log('templates:', templates);
     
     thisApp.initData();  
     

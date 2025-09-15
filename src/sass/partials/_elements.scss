@@ -3,9 +3,18 @@
 .btn-primary {
   @include btn($color-dark, $color-light, $color-dark);
 }
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
 .btn-secondary {
   @include btn($color-main, $color-light, $color-main);
+} 
+
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .btn-quantity {

@@ -1,5 +1,6 @@
 export const select = {
   templateOf: {
+    homePage:"#template-home-page",
     menuProduct: "#template-menu-product",
     cartProduct: '#template-cart-product',
     bookingWidget: '#template-booking-widget',
@@ -93,6 +94,8 @@ export const classNames = {
 };
 
 export const settings = {
+
+
     amountWidget: {
         defaultValue: 1,
         defaultMin: 0,
@@ -122,9 +125,24 @@ export const settings = {
         notRepeatParam: 'repeat=false',
         repeatParam: 'repeat_ne=false',
     },
+    images: {
+    // Karuzela opinii
+    image1: 'assets/images/homepage/testimonial1.jpg',
+    image2: 'assets/images/homepage/testimonial2.jpg',
+    image3: 'assets/images/homepage/testimonial3.jpg',
+
+    // Galeria zdjęć
+    gallery1: 'assets/images/homepage/gallery1.jpg',
+    gallery2: 'assets/images/homepage/gallery2.jpg',
+    gallery3: 'assets/images/homepage/gallery3.jpg',
+    gallery4: 'assets/images/homepage/gallery4.jpg',
+    gallery5: 'assets/images/homepage/gallery5.jpg',
+    gallery6: 'assets/images/homepage/gallery6.jpg'
+  }
 };
 
 export const templates = {
+  homePage: Handlebars.compile(document.querySelector(select.templateOf.homePage).innerHTML),
   menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
   cartProduct: Handlebars.compile(document.querySelector(select.templateOf.cartProduct).innerHTML),
   bookingWidget: Handlebars.compile(document.querySelector(select.templateOf.bookingWidget).innerHTML),

@@ -21,6 +21,7 @@
           <h2 class="logo__subtitle">the best homemade Italian food</h2>
         </div>
         <div class="main-nav">
+            <a href="#home">Home</a>
             <a href="#order">Order</a>
             <a href="#booking">Booking</a>
         </div>
@@ -62,6 +63,9 @@
   </header>
 
   <div id="pages">
+    <section id="home">
+      <div class="home-wrapper container"></div>
+    </section>
    <section id="order">
      <div id="product-list" class="product-list container"></div>
    </section>
@@ -70,6 +74,119 @@
    </section>
  </div>
 
+  <script id="template-home-page" type="text/x-handlebars-template">
+    <div class="home-wrapper">
+
+        /*Order online and book a table*/
+        <div class="home-section home-top">
+          <div class="home-box order">
+            <a href="#order" class="home-link">ORDER ONLINE</a>
+          </div>
+          <div class="home-box booking">
+            <a href="#booking" class="home-link">BOOK A TABLE</a>
+          </div>
+        </div>
+        /*Opening hours*/
+        <div class="home-section opening-hours">
+          <h3>OPENING HOURS:</h3>
+          <p>TUE-SUN, 12PM - 12AM</p>
+        </div>  
+
+        /*Karuzel*/
+        <div class="home-section testimonials">
+          <div class="testimonial-slide active">
+            <img src="{{image1}}"alt="testimonial 1"class="testimonial-image">
+            <blockquote class ="testimonial-text">
+              <p>AMAZING SERVICE!</p>
+              <p>The food is absolutely delicious and the service is top-notch. Highly recommend!</p>
+              <cite>-Margaret Osborne</cite>
+            </blockquote>
+          </div>
+          <div class="testimonial-slide">
+            <img src="{{image2}}"alt="testimonial 2"class="testimonial-image">
+            <blockquote class ="testimonial-text">
+              <p>Best pizza in town!</p>
+              <p>The food is absolutely delicious and the service is top-notch. Highly recommend!</p>
+              <cite>-John Smith</cite>
+            </blockquote>
+          </div>
+          <div class="testimonial-slide">
+            <img src="{{image3}}"alt="testimonial 3"class="testimonial-image">
+            <blockquote class ="testimonial-text">
+              <p>Perfect for family dinners!</p>
+              <p>We’ve been coming here for years and never disappointed. The atmosphere is warm and inviting</p>
+              <cite>-Emily Davis</cite>
+            </blockquote>
+          </div>
+        </div>
+        <div class = "testimonial-indicators">
+          <span class = "indicator active"></span>
+          <span class = "indicator"></span>
+          <span class = "indicator"></span>
+        </div>
+
+        /*gallery*/
+        <div class="home-section gallery"
+          <div class="gallery-item">
+            <img src="{{gallery1}}"alt="Gallery1"class="gallery-image"
+            <div class ="gallery-overlay">
+              <i class="fas fa-heart"></i>
+              <i class="fas fa-share-alt"></i>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="{{gallery1}}"alt="Gallery1"class="gallery-image"
+            <div class ="gallery-overlay">
+              <i class="fas fa-heart"></i>
+              <i class="fas fa-share-alt"></i>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="{{gallery1}}"alt="Gallery 1"class="gallery-image"
+            <div class ="gallery-overlay">
+              <i class="fas fa-heart"></i>
+              <i class="fas fa-share-alt"></i>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="{{gallery2}}"alt="Gallery 2"class="gallery-image"
+            <div class ="gallery-overlay">
+              <i class="fas fa-heart"></i>
+              <i class="fas fa-share-alt"></i>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="{{gallery3}}"alt="Gallery 3"class="gallery-image"
+            <div class ="gallery-overlay">
+              <i class="fas fa-heart"></i>
+              <i class="fas fa-share-alt"></i>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="{{gallery4}}"alt="Gallery 4"class="gallery-image"
+            <div class ="gallery-overlay">
+              <i class="fas fa-heart"></i>
+              <i class="fas fa-share-alt"></i>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="{{gallery5}}"alt="Gallery 5"class="gallery-image"
+            <div class ="gallery-overlay">
+              <i class="fas fa-heart"></i>
+              <i class="fas fa-share-alt"></i>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="{{gallery6}}"alt="Gallery 6"class="gallery-image"
+            <div class ="gallery-overlay">
+              <i class="fas fa-heart"></i>
+              <i class="fas fa-share-alt"></i>
+            </div>
+          </div>
+          <a href="https://instagram.com/mammamia_pizzeria" target="_blank" class="gallery-link">View more on Instagram</a>
+        </div>
+    </div>
+  </script>
   <script id="template-cart-product" type="text/x-handlebars-template">
     <li>
       <div class="widget-amount"> <!-- widget-amount -->

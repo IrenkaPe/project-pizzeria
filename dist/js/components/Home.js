@@ -1,5 +1,5 @@
 import { defaults } from "json-server";
-import {select, templates, settings} from "../settings";
+import {select, templates, settings} from "../settings.js";
 import utils from "../utils.js";
 
 class Home {
@@ -49,15 +49,22 @@ class Home {
         }
         thisHome.initCarousel();
     }
-    initCarousel(){
+    /*initCarousel(){
         const thisHome = this;
         let currentSlide = 0;
         const slides = thisHome.dom.testimonialSlides;
         const indicators = thisHome.dom.indicators;
 
         thisHome.showSlide(currentSlide);
+        const intervalId =setInterval(function(){
+            currentSlide = (currentSlide +1 )
+        })
 
-    }
+        thisHome.showSlide = function(index){
+            
+        }
+
+    }*/
 }
 
 export defaults Home;

@@ -5,16 +5,15 @@ import Booking from './components/Booking.js'
 import Home from './components/Home.js'
 
 const app = {
+  
 	initPages: function () {
 		const thisApp = this
 
-		thisApp.pages = document.querySelector(select.containerOf.pages).children
+		thisApp.pages = document.querySelector(select.containerOf.pages).children;
 
-		thisApp.navLinks = document.querySelectorAll(select.nav.links)
-		//znajdujemy linki
-		const idFromHash = window.location.hash.replace('#/', '')
-		//console.log('id FromHash', idFromHash);
-
+		thisApp.navLinks = document.querySelectorAll(select.nav.links);
+	
+		const idFromHash = window.location.hash.replace('#/', '');
 		let pageMatchingHash = thisApp.pages[0].id
 		for (let page of thisApp.pages) {
 			if (page.id == idFromHash) {
@@ -23,52 +22,46 @@ const app = {
 			}
 		}
 
-		thisApp.activatePage(pageMatchingHash) //znajdujemy podstrony
+		thisApp.activatePage(pageMatchingHash); //znajdujemy podstrony
 
 		for (let link of thisApp.navLinks) {
 			link.addEventListener('click', function (event) {
 				const clickedElement = this
 				event.preventDefault()
-				//get page id from href attribute
-				const id = clickedElement.getAttribute('href').replace('#', '') // w stałej id zapisujemy klknięty atrybut href klikniętego elementu w którym zamieniamy# na pusty ciąg znaków
-				// run thisApp.activatePage with that id
-				thisApp.activatePage(id)
+				
+				const id = clickedElement.getAttribute('href').replace('#', '');
+				thisApp.handleNavigation(id)
 
 				//change URL hash - dodajemy adresy podstron!!
 				window.location.hash = '#/' + id
 			})
 		}
 	},
+
 	activatePage: function (pageId) {
 		//console.log('Activating page:', pageId);
 		const thisApp = this
-		// add class'active' to matching pages, temove from non-matching
+		
 		for (let page of thisApp.pages) {
-			/* if(page.id == pageId){
-          page.classList.add(classNames.pages.active);
-        } else {
-          page.classList.remove(classNames.pages.active);
-        }*/
-			page.classList.toggle(classNames.pages.active, page.id == pageId)
-		}
-		//toggle - można mu nadać drugi  argument = możemy mu dać warunek z klasy if
-		//add class'active' to matching links, temove from non-matching
+			page.classList.toggle(classNames.pages.active, page.id === pageId)
+		}//toggle - można mu nadać drugi  argument = możemy mu dać warunek z klasy if
 		for (let link of thisApp.navLinks) {
-			link.classList.toggle(classNames.nav.active, link.getAttribute('href') == '#' + pageId) // dla każdego z linków  z thisApp.navLinks  chcemy dodać lub usunąć klasę ,  w zależności od tego czy jest w linku zapisana ta klasa
+			link.classList.toggle(classNames.nav.active, link.getAttribute('href') === '#' + pageId) 
 		}
 	},
 
-	initMenu: function () {
-		const thisApp = this
+  handleNavigation:function(pageId){
+    const thisApp = this;
+    thisApp.activatePage(pageId);
+    window.location.hash = '#/'+ pageId;
+  },
 
-		//console.log('thisApp.data:', thisApp.data);
+	initMenu: function () {
+		const thisApp = this;
+
 		for (let productData of thisApp.data.products) {
 			new Product(productData.id, productData)
 		}
-		/*for(let productData in thisApp.data.products){
-       // new Product(productData,thisApp.data.products[productData]);
-       new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
-      }*/
 	},
 
 	initData: function () {
@@ -108,11 +101,12 @@ const app = {
 		thisApp.booking = new Booking(bookingWidget)
 	},
 
-  initHome: function(){
-    const thisApp = this;
-    const home = document.querySelector(select.containerOf.home)
-    thisApp.home =new Home(home);
+  initHome: function () {
+    const thisApp = this
+    const homeContainer = document.querySelector(select.containerOf.home)
+    thisApp.home = new Home(homeContainer, thisApp);
   },
+
 
 	init: function () {
 		const thisApp = this
@@ -123,13 +117,9 @@ const app = {
 		//console.log('templates:', templates);
 
 		thisApp.initData()
-
 		thisApp.initCart()
-
 		thisApp.initPages()
-
 		thisApp.initBooking()
-
     thisApp.initHome()
 	},
 }

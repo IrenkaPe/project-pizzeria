@@ -1,18 +1,19 @@
-import { defaults } from "json-server";
+
 import {select, templates, settings} from "../settings.js";
 import utils from "../utils.js";
 
 class Home {
-    constructor(element){
+    constructor(element, appInstance){
         const thisHome = this;
         thisHome.render(element);
+        thisHome.app = appInstance;
         thisHome.initWidgets();
 
     }
-    render(){
+    render(element){
         const thisHome = this;
 
-        const generatedHTML = templates.homePage({
+        const generatedHTML = templates.home ({
             image1: settings.images.image1,
             image2: settings.images.image2,
             image3: settings.images.image3,
@@ -22,9 +23,11 @@ class Home {
             gallery4: settings.images.gallery4,
             gallery5: settings.images.gallery5,
             gallery6: settings.images.gallery6,
+            orderBg: settings.images.orderBg,
+            bookingBg:settings.images.bookingBg,
+        });
 
-        })
-        thisHome.dom = {}
+        thisHome.dom = {};
         thisHome.dom.wrapper = element;
         thisHome.dom.wrapper.innerHTML = generatedHTML;
 
@@ -38,16 +41,16 @@ class Home {
         if(thisHome.dom.orderLink){
             thisHome.dom.orderLink.addEventListener('click',function(event){
                 event.preventDefault();
-                window.location.hash ='#order'
+                thisHome.app.handleNavigation('order');
             });
         }
         if(thisHome.dom.bookingLink){
             thisHome.dom.bookingLink.addEventListener('click',function(event){
                 event.preventDefault();
-                window.location.hash ='#booking'
+                thisHome.app.handleNavigation('booking');
             })
         }
-        thisHome.initCarousel();
+
     }
     /*initCarousel(){
         const thisHome = this;
@@ -67,4 +70,4 @@ class Home {
     }*/
 }
 
-export defaults Home;
+export default Home;

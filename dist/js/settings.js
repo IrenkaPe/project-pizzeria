@@ -6,7 +6,7 @@ export const select = {
     bookingWidget: '#template-booking-widget',
     },
     containerOf: {
-      home: '.home-wrapper',
+      home: '#home',
       menu: '#product-list',
       cart: '#cart',
       pages: '#pages',
@@ -134,18 +134,23 @@ export const settings = {
         repeatParam: 'repeat_ne=false',
     },
     images: {
+
+    //background top
+    orderBg:'images/homepage/pizza-1.jpg',
+    bookingBg:'images/homepage/pizza-2.jpg',
+
     // Karuzela opinii
-    image1: 'assets/images/homepage/testimonial1.jpg',
-    image2: 'assets/images/homepage/testimonial2.jpg',
-    image3: 'assets/images/homepage/testimonial3.jpg',
+    image1: 'images/homepage/pizza-1.jpg',
+    image2: 'images/homepage/pizza-2.jpg',
+    image3: 'images/homepage/pizza-3.jpg',
 
     // Galeria zdjęć
-    gallery1: 'assets/images/homepage/gallery1.jpg',
-    gallery2: 'assets/images/homepage/gallery2.jpg',
-    gallery3: 'assets/images/homepage/gallery3.jpg',
-    gallery4: 'assets/images/homepage/gallery4.jpg',
-    gallery5: 'assets/images/homepage/gallery5.jpg',
-    gallery6: 'assets/images/homepage/gallery6.jpg'
+    gallery1: 'images/homepage/pizza-4.jpg',
+    gallery2: 'images/homepage/pizza-5.jpg',
+    gallery3: 'images/homepage/pizza-6.jpg',
+    gallery4: 'images/homepage/pizza-7.jpg',
+    gallery5: 'images/homepage/pizza-8.jpg',
+    gallery6: 'images/homepage/pizza-9.jpg'
   }
 };
 

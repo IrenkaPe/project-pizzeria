@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css?family=Lato:400,300i,700%7COswald:300,500,700&amp;subset=latin-ext" rel="stylesheet">
   <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
   <link rel="stylesheet" href="vendor/range-slider.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -76,23 +77,19 @@
 
   <script id="template-home" type="text/x-handlebars-template">
     <div class="home-wrapper">
-
-        /*Order online and book a table*/
         <div class="home-section home-top">
-          <div class="home-box order">
+          <div class="home-box order" style="background-image: url('{{orderBg}}');">
             <a href="#order" class="home-link">ORDER ONLINE</a>
           </div>
-          <div class="home-box booking">
+          <div class="home-box booking" style="background-image: url('{{bookingBg}}');">
             <a href="#booking" class="home-link">BOOK A TABLE</a>
           </div>
         </div>
-        /*Opening hours*/
+       
         <div class="home-section opening-hours">
           <h3>OPENING HOURS:</h3>
           <p>TUE-SUN, 12PM - 12AM</p>
         </div>  
-
-        /*Karuzel*/
         <div class="home-section testimonials">
           <div class="testimonial-slide active">
             <img src="{{image1}}"alt="testimonial 1"class="testimonial-image">
@@ -125,63 +122,50 @@
           <span class = "indicator"></span>
         </div>
 
-        /*gallery*/
-        <div class="home-section gallery"
+ 
+        <div class="home-section gallery">
           <div class="gallery-item">
-            <img src="{{gallery1}}"alt="Gallery1"class="gallery-image"
+            <img src="{{gallery1}}"alt="Gallery1"class="gallery-image">
             <div class ="gallery-overlay">
               <i class="fas fa-heart"></i>
               <i class="fas fa-share-alt"></i>
             </div>
           </div>
           <div class="gallery-item">
-            <img src="{{gallery1}}"alt="Gallery1"class="gallery-image"
+            <img src="{{gallery2}}"alt="Gallery1"class="gallery-image">
             <div class ="gallery-overlay">
               <i class="fas fa-heart"></i>
               <i class="fas fa-share-alt"></i>
             </div>
           </div>
           <div class="gallery-item">
-            <img src="{{gallery1}}"alt="Gallery 1"class="gallery-image"
+            <img src="{{gallery3}}"alt="Gallery 1"class="gallery-image">
             <div class ="gallery-overlay">
               <i class="fas fa-heart"></i>
               <i class="fas fa-share-alt"></i>
             </div>
           </div>
           <div class="gallery-item">
-            <img src="{{gallery2}}"alt="Gallery 2"class="gallery-image"
+            <img src="{{gallery4}}"alt="Gallery 2"class="gallery-image">
             <div class ="gallery-overlay">
               <i class="fas fa-heart"></i>
               <i class="fas fa-share-alt"></i>
             </div>
           </div>
           <div class="gallery-item">
-            <img src="{{gallery3}}"alt="Gallery 3"class="gallery-image"
+            <img src="{{gallery5}}"alt="Gallery 3"class="gallery-image">
             <div class ="gallery-overlay">
               <i class="fas fa-heart"></i>
               <i class="fas fa-share-alt"></i>
             </div>
           </div>
           <div class="gallery-item">
-            <img src="{{gallery4}}"alt="Gallery 4"class="gallery-image"
+            <img src="{{gallery6}}"alt="Gallery 4"class="gallery-image">
             <div class ="gallery-overlay">
               <i class="fas fa-heart"></i>
               <i class="fas fa-share-alt"></i>
             </div>
-          </div>
-          <div class="gallery-item">
-            <img src="{{gallery5}}"alt="Gallery 5"class="gallery-image"
-            <div class ="gallery-overlay">
-              <i class="fas fa-heart"></i>
-              <i class="fas fa-share-alt"></i>
-            </div>
-          </div>
-          <div class="gallery-item">
-            <img src="{{gallery6}}"alt="Gallery 6"class="gallery-image"
-            <div class ="gallery-overlay">
-              <i class="fas fa-heart"></i>
-              <i class="fas fa-share-alt"></i>
-            </div>
+          </div>          
           </div>
           <a href="https://instagram.com/mammamia_pizzeria" target="_blank" class="gallery-link">View more on Instagram</a>
         </div>
@@ -361,6 +345,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
   <script src="vendor/range-slider.min.js"></script>
   <script src="js/app.js" type="module"></script>
 </body>

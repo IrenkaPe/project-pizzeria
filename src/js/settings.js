@@ -45,8 +45,8 @@ export const select = {
     home:{
       orderLink:'a[href="#order"]',
       bookingLink:'a[href="#booking"]',
-      testimonialSlide:'.testimonial-slide',
-      indicator: '.indicator',
+      testimonialSlide:'.carousel-cell',
+      testimonialsWrapper: '.testimonials',
     },
     booking: {
         peopleAmount: '.people-amount',

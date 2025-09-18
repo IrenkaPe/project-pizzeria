@@ -1,6 +1,8 @@
 
 import {select, templates, settings} from "../settings.js";
 import utils from "../utils.js";
+import TestimonialCarousel from "./TestimonialCarousel.js";
+
 
 class Home {
     constructor(element, appInstance){
@@ -8,8 +10,10 @@ class Home {
         thisHome.render(element);
         thisHome.app = appInstance;
         thisHome.initWidgets();
-
+        thisHome.initCarousel();
     }
+
+
     render(element){
         const thisHome = this;
 
@@ -34,7 +38,7 @@ class Home {
         thisHome.dom.orderLink = thisHome.dom.wrapper.querySelector(select.home.orderLink);
         thisHome.dom.bookingLink = thisHome.dom.wrapper.querySelector(select.home.bookingLink);
         thisHome.dom.testimonialSlides = thisHome.dom.wrapper.querySelectorAll(select.home.testimonialSlide);
-        thisHome.dom.indicators = thisHome.dom.wrapper.querySelectorAll(select.home.indicator);
+        thisHome.dom.testimonialsWrapper = thisHome.dom.wrapper.querySelector(select.home.testimonialsWrapper);
     }
     initWidgets(){
         const thisHome = this;
@@ -52,22 +56,16 @@ class Home {
         }
 
     }
-    /*initCarousel(){
+    
+    initCarousel(){
         const thisHome = this;
-        let currentSlide = 0;
-        const slides = thisHome.dom.testimonialSlides;
-        const indicators = thisHome.dom.indicators;
+        const carouselElement = thisHome.dom.wrapper.querySelector(select.home.testimonialsWrapper);
 
-        thisHome.showSlide(currentSlide);
-        const intervalId =setInterval(function(){
-            currentSlide = (currentSlide +1 )
-        })
-
-        thisHome.showSlide = function(index){
-            
+        thisHome.testimonialCarousel = new TestimonialCarousel(carouselElement); 
+   
         }
 
-    }*/
-}
+    }
+
 
 export default Home;

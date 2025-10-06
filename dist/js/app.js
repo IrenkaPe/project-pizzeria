@@ -115,7 +115,7 @@ const app = {
 		//console.log('classNames:', classNames);
 		//console.log('settings:', settings);
 		//console.log('templates:', templates);
-
+		
 		thisApp.initData()
 		thisApp.initCart()
 		thisApp.initPages()
@@ -123,6 +123,8 @@ const app = {
     thisApp.initHome()
 	},
 }
+
 app.init()
+window.app = app;
 
 export { app }

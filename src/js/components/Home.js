@@ -1,6 +1,6 @@
 
 import {select, templates, settings} from "../settings.js";
-import utils from "../utils.js";
+
 import TestimonialCarousel from "./TestimonialCarousel.js";
 
 
@@ -43,6 +43,7 @@ class Home {
     initWidgets(){
         const thisHome = this;
         if(thisHome.dom.orderLink){
+            console.log('✅ Adding click listener to ORDER');
             thisHome.dom.orderLink.addEventListener('click',function(event){
                 event.preventDefault();
                 thisHome.app.handleNavigation('order');

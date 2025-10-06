@@ -123,7 +123,7 @@ export const settings = {
         tableIdAttribute: 'data-table',
     },
     db: {
-        url: '//localhost:3131',
+        url: '//' + window.location.hostname + (window.location.hostname=='localhost' ? ':3131' : ''), // jeśli server to localhost to dodaj 3131 w przeciwnym wypadku nic nie dodawaj
         products: 'products',
         orders: 'orders',
         bookings: 'bookings',

@@ -1,3 +1,12 @@
+/* Ukrywanie i pokazywanie stron */
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
 .home-wrapper {
   max-width: 700px;
   margin: 50px auto;
@@ -46,6 +55,7 @@
     background: rgba($color-dark, 0.1);
     opacity: 0;
     transition: opacity 0.4s ease;
+    pointer-events: none; // kliknicia przechodzą przez before do własciwego elementu dzięki temu daje się on kliknąć
   }
 
   &:hover::before {
@@ -240,7 +250,6 @@
 .gallery-link:hover {
   color: darken($color-main, 10%);
 }
-
 
 
 
